@@ -7,11 +7,18 @@ const BASE_URL = "http://localhost:3000/users"
 // REGISTER USER
 export const registerUser = createAsyncThunk(
   "users/registerUser",
-  async (userData) => {
-     console.log("Sending to server:", userData)
+  async (userData, { rejectWithValue }) => {
+
+    // Check if email already exists
+    const check = await axios.get(`${BASE_URL}?email=${userData.email}`)
+
+    if (check.data.length > 0) {
+      return rejectWithValue("Email already exists")
+    }
+
+    // If email not found → create user
     const result = await axios.post(BASE_URL, userData)
 
-    console.log("Response:", result.data)
     return result.data
   }
 )
@@ -20,10 +27,16 @@ export const registerUser = createAsyncThunk(
 // LOGIN USER
 export const loginUser = createAsyncThunk(
   "users/loginUser",
-  async ({ email, password }) => {
+  async ({ email, password },{rejectWithValue}) => {
     const result = await axios.get(
       `${BASE_URL}?email=${email}&password=${password}`
     )
+
+      if (result.data.length === 0) {
+      return rejectWithValue("Invalid email or password")
+    }
+    
+    
     return result.data[0]
   }
 )
@@ -41,12 +54,12 @@ export const updateUserProfile = createAsyncThunk(
   }
 )
 
-
+const savedUser = JSON.parse(localStorage.getItem("user"))
 const userSlice = createSlice({
   name: "users",
 
   initialState: {
-    currentUser: null,
+    currentUser:savedUser|| null,
     loading: false,
     error: null
   },
@@ -54,6 +67,7 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       state.currentUser = null
+       localStorage.removeItem("user")
     }
   },
 
@@ -63,15 +77,22 @@ const userSlice = createSlice({
 
       .addCase(registerUser.pending, (state) => {
         state.loading = true
+        state.error = null
       })
 
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.loading = false
-        state.currentUser = action.payload
+        // state.currentUser = action.payload
+
+
+  // localStorage.setItem("user", JSON.stringify(action.payload))
       })
 
-      .addCase(registerUser.rejected, (state) => {
+      
+
+      .addCase(registerUser.rejected, (state, action) => {
         state.loading = false
+        state.error = action.payload
       })
 
 
@@ -82,10 +103,13 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false
         state.currentUser = action.payload
+
+        localStorage.setItem("user", JSON.stringify(action.payload))
       })
 
-      .addCase(loginUser.rejected, (state) => {
+      .addCase(loginUser.rejected, (state,action) => {
         state.loading = false
+        state.error = action.payload
       })
 
 

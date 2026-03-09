@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../Components/Header'
-import JobCard from '../Components/JobCard'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchJobs } from '../Redux/slice/jobSlice'
 
@@ -33,14 +33,22 @@ function Home() {
     return "Just now";
   }
   return (
-    <div>
+    <>
+
+<div className="w-full flex flex-col items-start justify-start text-left min-h-screen">
       {/* <JobCard/> */}
-      <Header/>
+     <div className="w-full">
+     <Header />
+  </div>
+
+     
+ 
+
       {allJobs.length > 0 ?
-        allJobs.map(job => (<div className="w-full max-w-5xl bg-white border border-gray-200 rounded-xl p-5 hover:bg-gray-50 transition-colors flex flex-col md:flex-row md:items-center gap-6">
+        allJobs.map(job => (<div  key={job.id} className="w-full max-w-5xl bg-white border border-gray-200 rounded-xl p-5 hover:bg-gray-50 transition-colors flex flex-col md:flex-row md:items-center gap-6">
 
           {/* 1. Logo Section */}
-          <div key={job.id} className="flex-shrink-0">
+          <div className="flex-shrink-0">
 
             <div className="h-16 w-16 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden">
               <img src={job.companyLogo} alt="Company Logo" className="object-cover" />
@@ -92,6 +100,9 @@ function Home() {
         </div>)) : null}
 
     </div>
+   
+   
+     </>
   )
 }
 

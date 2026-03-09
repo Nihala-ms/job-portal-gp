@@ -1,36 +1,54 @@
 import React, { useState } from "react";
 import "./auth.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser, loginUser } from "../Redux/slice/userSlice";
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 function AuthPage() {
+  const navigate = useNavigate()
+  const currentUser = useSelector((state) => state.userReducer.currentUser)
+
+
+  //  to go to main page afyer sucessfull login
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/home")
+    }
+  }, [currentUser])
+
+  const error = useSelector((state) => state.userReducer.error)
 
   const dispatch = useDispatch()
 
   const [isRegister, setIsRegister] = useState(false)
 
-  const [loginData,setLoginData] = useState({
-    email:"",
-    password:""
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: ""
   })
 
-  const [registerData,setRegisterData] = useState({
-    name:"",
-    email:"",
-    password:""
+  const [registerData, setRegisterData] = useState({
+    name: "",
+    email: "",
+    password: ""
   })
 
-  const handleRegister = () => {
+  const handleRegister = async() => {
     //  console.log("Register clicked", registerData)
-    dispatch(registerUser({
+    const result = await dispatch(registerUser({
       ...registerData,
-      profile:{
-        gender:"",
-        location:"",
-        education:[],
-        workExperience:[]
+      profile: {
+        gender: "",
+        location: "",
+        education: [],
+        workExperience: []
       }
     }))
+     if (result.meta.requestStatus === "fulfilled") {
+    setIsRegister(false)
+  }
+    
   }
 
   const handleLogin = () => {
@@ -50,17 +68,18 @@ function AuthPage() {
               type="email"
               placeholder="Email"
               value={loginData.email}
-              onChange={(e)=>setLoginData({...loginData,email:e.target.value})}
+              onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
             />
 
             <input
               type="password"
               placeholder="Password"
               value={loginData.password}
-              onChange={(e)=>setLoginData({...loginData,password:e.target.value})}
+              onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
             />
 
             <button onClick={handleLogin}>Login</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
           </div>
 
         ) : (
@@ -72,24 +91,26 @@ function AuthPage() {
               type="text"
               placeholder="Name"
               value={registerData.name}
-              onChange={(e)=>setRegisterData({...registerData,name:e.target.value})}
+              onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
             />
 
             <input
               type="email"
               placeholder="Email"
               value={registerData.email}
-              onChange={(e)=>setRegisterData({...registerData,email:e.target.value})}
+              onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
             />
 
             <input
               type="password"
               placeholder="Password"
               value={registerData.password}
-              onChange={(e)=>setRegisterData({...registerData,password:e.target.value})}
+              onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
             />
 
             <button onClick={handleRegister}>Register</button>
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
           </div>
         )}
 

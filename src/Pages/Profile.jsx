@@ -1,6 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux"
+import Info from "../Components/Edit/Info";
+import Education from "../Components/Edit/Education";
+import Experience from "../Components/Edit/Experience";
 
 function Profile() {
+    const currentUser = useSelector((state) => state.userReducer.currentUser)
+
   return (
     <div className="bg-gray-100 min-h-screen p-8">
 
@@ -18,9 +24,9 @@ function Profile() {
             />
 
             <div>
-              <h2 className="text-2xl font-semibold">User Name</h2>
-              <p className="text-gray-500">user@email.com</p>
-              <p className="text-gray-500">Kochi, India</p>
+              <h2 className="text-2xl font-semibold">{currentUser?.name}</h2>
+              <p className="text-gray-500">{currentUser?.email}</p>
+              <p className="text-gray-500">Location</p>
             </div>
           </div>
 
@@ -28,9 +34,7 @@ function Profile() {
           <div className="bg-white shadow rounded-xl p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Education</h3>
-              <button className="text-sm border px-3 py-1 rounded-lg hover:bg-gray-100">
-                Add
-              </button>
+              <Education/>
             </div>
 
             <div className="space-y-4">
@@ -46,9 +50,7 @@ function Profile() {
           <div className="bg-white shadow rounded-xl p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Work Experience</h3>
-              <button className="text-sm border px-3 py-1 rounded-lg hover:bg-gray-100">
-                Add
-              </button>
+              <Experience/>
             </div>
 
             <div className="space-y-4">
@@ -70,9 +72,9 @@ function Profile() {
           <div className="bg-white shadow rounded-xl p-6">
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-lg font-semibold">Personal Info</h3>
-              <button className="text-sm border px-3 py-1 rounded-lg hover:bg-gray-100">
-                Edit
-              </button>
+              
+               <Info/>
+            
             </div>
 
             <div className="space-y-2 text-gray-700">
