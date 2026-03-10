@@ -14,9 +14,11 @@ return ( <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
 
   {/* NAVBAR */}
   <nav className="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto bg-white rounded-b-xl shadow-sm">
-    <div className="text-2xl font-bold text-blue-600 tracking-tight">
-      Carrera
-    </div>
+    <Link to={'/home'}>
+      <div className="text-2xl font-bold text-blue-600 tracking-tight">
+        Carrera
+      </div>
+    </Link>
 
     <div className="hidden md:flex space-x-8 font-medium text-slate-600">
       <a href="#about" className="hover:text-blue-600 transition">About</a>
@@ -55,8 +57,8 @@ return ( <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
           </p>
 
           <p className="text-md text-slate-500 mt-2">
-            Kochi, Kerala
-          </p>
+  {currentUser?.profile?.location || "Add location"}
+</p>
 
         </div>
 

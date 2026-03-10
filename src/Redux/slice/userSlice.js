@@ -115,6 +115,20 @@ const userSlice = createSlice({
 
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.currentUser = action.payload
+          localStorage.setItem("user", JSON.stringify(action.payload))
+
+      })
+
+      
+
+      .addCase(updateUserProfile.pending, (state, action) => {
+        state.currentUser = []
+      })
+
+      
+
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.currentUser = []
       })
 
   }

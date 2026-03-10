@@ -36,7 +36,7 @@ function Home() {
  
   return (
     <>
-      <Header />
+      <Header insideHome viewApplication />
 
       <div className="bg-gray-100 min-h-screen p-6">
 

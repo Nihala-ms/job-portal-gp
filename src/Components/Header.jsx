@@ -4,9 +4,10 @@ import { useDispatch } from "react-redux"
 import { logoutUser } from '../Redux/slice/userSlice';
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { searchJob } from '../Redux/slice/jobSlice';
 
 
-const Header = () => {
+const Header = ({insideHome,viewApplication}) => {
 
   const currentUser = useSelector((state) => state.userReducer.currentUser)
 
@@ -28,13 +29,15 @@ const handleLogout = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <span className="text-2xl font-black tracking-tight text-slate-800 hidden lg:block">
-            CARRERA
-          </span>
+          <Link to={'/home'}>
+            <span className="text-2xl font-black tracking-tight text-slate-800 hidden lg:block">
+              CARRERA
+            </span>
+          </Link>
         </div>
 
         {/* --- Search Bar --- */}
-        <div className="flex-1 max-w-xl relative group">
+        {insideHome&& <div className="flex-1 max-w-xl relative group">
           <div className="absolute inset-y-0 left-4 flex items-center">
             <svg className="w-5 h-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -42,10 +45,11 @@ const handleLogout = () => {
           </div>
           <input 
             type="text" 
+            onChange={e=>dispatch(searchJob(e.target.value.toLowerCase()))}
             placeholder="Search jobs, companies..." 
             className="w-full bg-slate-100 border-none rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all outline-none"
           />
-        </div>
+        </div>}
 
         {/* --- Navigation Items --- */}
         <div className="flex items-center gap-6">
@@ -56,9 +60,11 @@ const handleLogout = () => {
 
           <div className="h-8 w-px bg-slate-200 hidden md:block"></div>
 
-          <button className="bg-blue-50 text-blue-600 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-blue-100 transition whitespace-nowrap">
-            View Applications
-          </button>
+          { viewApplication&& <Link to={'/applied-jobs'}>
+            <button className="bg-blue-50 text-blue-600 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-blue-100 transition whitespace-nowrap">
+              View Applications
+            </button>
+          </Link>}
            <button onClick={handleLogout} className="bg-blue-50 text-blue-600 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-blue-100 transition whitespace-nowrap">
             Log out
           </button>

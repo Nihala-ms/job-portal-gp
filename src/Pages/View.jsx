@@ -1,23 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import { addToAppliedJobs } from "../Redux/slice/appliedSlice";
 
 function View() {
 
+  const dispatch=useDispatch()
+
+
 const { id } = useParams()
+const [job,setJob]=useState({})
+const {appliedJobs}=useSelector(state=>state.appliedReducer)
 
-const { allJobs } = useSelector(state => state.jobReducer)
+useEffect(()=>{
+  const allJobs=JSON.parse(localStorage.getItem("allJobs"))
+  setJob(allJobs.find(item=>item.id==id))
+},[])
 
-const job = allJobs.find(item => item.id == id)
+// const { allJobs } = useSelector(state => state.jobReducer)
+
+// const job = allJobs.find(item => item.id == id)
 
 // if(!job){
 // return <h2 className="text-center mt-10">Job not found</h2>
 // }
 
+
+const handleApplyJob=(job)=>{
+  const existingJob=appliedJobs.find(item=>item.id==job.id)
+  if(existingJob){
+    alert("job already applied")
+  }
+  else{
+    dispatch(addToAppliedJobs(job))
+    alert("job applied")
+  }
+}
+
 return (
-<> <Header />
+<> <Header viewApplication />
 
 
   <div className="bg-gray-100 min-h-screen p-6">
@@ -69,16 +92,15 @@ return (
 
           <div className="flex flex-wrap gap-2">
 
-            {job.skillsRequired.map(skill => (
+            
 
               <span
-                key={skill}
+                
                 className="bg-gray-100 text-sm px-3 py-1 rounded"
               >
-                {skill}
               </span>
 
-            ))}
+            
 
           </div>
 
@@ -87,7 +109,7 @@ return (
         {/* Apply Button */}
         <div className="mt-8">
 
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+          <button onClick={()=>handleApplyJob(job)}  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
             Apply Now
           </button>
 
