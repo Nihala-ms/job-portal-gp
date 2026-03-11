@@ -38,12 +38,14 @@ function AuthPage() {
     //  console.log("Register clicked", registerData)
     const result = await dispatch(registerUser({
       ...registerData,
+       appliedJobs: [], 
       profile: {
         gender: "",
         location: "",
         about:"",
         education: [],
-        workExperience: []
+        workExperience: [],
+        skills:[]
         
       }
     }))
@@ -81,7 +83,7 @@ function AuthPage() {
                 onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
               />
   
-              <button onClick={handleLogin}>Login</button>
+              <button className="button-primary" onClick={handleLogin}>Login</button>
               {error && <p style={{ color: "red" }}>{error}</p>}
             </div>
   
@@ -111,7 +113,7 @@ function AuthPage() {
                 onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
               />
   
-              <button onClick={handleRegister}>Register</button>
+              <button className="button-primary" onClick={handleRegister}>Register</button>
   
               {error && <p style={{ color: "red" }}>{error}</p>}
             </div>
@@ -123,12 +125,12 @@ function AuthPage() {
           {!isRegister ? (
             <>
               <h2>New Here?</h2>
-              <button onClick={() => setIsRegister(true)}>Register</button>
+              <button className="button-primary" onClick={() => setIsRegister(true)}>Register</button>
             </>
           ) : (
             <>
               <h2>Already have account?</h2>
-              <button onClick={() => setIsRegister(false)}>Login</button>
+              <button className="button-primary" onClick={() => setIsRegister(false)}>Login</button>
             </>
           )}
         </div>

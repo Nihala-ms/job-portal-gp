@@ -1,17 +1,16 @@
+
 import React from 'react'
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../Redux/slice/userSlice';
 
-function Info() {
+function AboutMe() {
 
   const currentUser = useSelector((state) => state.userReducer.currentUser)
   const dispatch = useDispatch()
 
-  const [name, setName] = useState(currentUser?.name || "")
-  const [email, setEmail] = useState(currentUser?.email || "")
-  const [location, setLocation] = useState(currentUser?.location || "")
-  const [gender, setGender] = useState(currentUser?.gender || "")
+  const [aboutMe, setAboutMe] = useState(currentUser?.profile?.about || "")
+
 
 
 
@@ -19,12 +18,11 @@ const handleUpdateInfo = async (e) => {
   e.preventDefault()
 
   const updatedData = {
-    name,
-    email,
+    ...currentUser,
     profile: {
       ...currentUser.profile,
-      gender,
-      location
+      about:aboutMe
+     
     }
   }
 
@@ -52,51 +50,28 @@ const handleUpdateInfo = async (e) => {
       {/* Modal */}
       {open && (
         <div className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-full bg-black/50">
-          <div className="bg-white p-6 rounded w-[400px]">
+          <div className="bg-white p-6 rounded w-[600px]">
 
             {/* Header */}
             <div className="flex justify-between items-center border-b pb-3">
-              <h3 className="text-lg font-medium">Edit personal information</h3>
+              <h3 className="text-lg font-medium">Edit About me </h3>
               <button onClick={() => setOpen(false)}>X</button>
             </div>
 
             {/* Body */}
-<form onSubmit={handleUpdateInfo} className="mt-4 space-y-4">              <input
+<form onSubmit={handleUpdateInfo} className="mt-4 space-y-4">              
+    <textarea
                 type="text"
-                placeholder="name"
-                className="w-full border p-2 rounded"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
+                placeholder="About me"
+                className="w-full border h-[150px] p-2 rounded"
+                onChange={(e) => setAboutMe(e.target.value)}
+                value={aboutMe}
 
               />
 
-              <input
-                type="text"
-                placeholder="Email"
-                className="w-full border p-2 rounded"
-               onChange={(e) => setEmail(e.target.value)}
-               value={email}
+             
 
-              />
-
-              <input
-                type="text"
-                placeholder="location"
-                className="w-full border p-2 rounded"
-                  onChange={(e) => setLocation(e.target.value)}
-                  value={location}
-
-              />
-
-              <input
-                type="text"
-                placeholder="Gender"
-                className="w-full border p-2 rounded"
-                  onChange={(e) => setGender(e.target.value)}
-                  value={gender}
-
-              />
-
+            
 
 
               <div className="flex justify-between pt-2">
@@ -122,4 +97,4 @@ const handleUpdateInfo = async (e) => {
   )
 }
 
-export default Info
+export default AboutMe

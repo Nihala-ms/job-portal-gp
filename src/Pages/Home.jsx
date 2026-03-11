@@ -9,17 +9,17 @@ import { useNavigate } from 'react-router-dom'
 
 
 function Home() {
-   const currentUser = useSelector((state) => state.userReducer.currentUser)
+  const currentUser = useSelector((state) => state.userReducer.currentUser)
 
   const { allJobs } = useSelector(state => state.jobReducer)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
-  if (!currentUser) {
-    navigate("/auth")
-  }
-}, [currentUser,navigate])
+    if (!currentUser) {
+      navigate("/auth")
+    }
+  }, [currentUser, navigate])
 
   useEffect(() => {
     dispatch(fetchJobs())
@@ -40,9 +40,9 @@ function Home() {
     if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
     return "Just now";
   }
- 
 
- 
+
+
   return (
     <>
       <Header insideHome viewApplication />
@@ -89,7 +89,7 @@ function Home() {
 
 
           {/* CENTER JOB FEED */}
-          <div className="col-span-12 lg:col-span-6 space-y-5">
+          <div className="col-span-12 lg:col-span-6 space-y-5 max-h-screen overflow-y-auto">
 
             {allJobs.length > 0 && allJobs.map(job => (
 
@@ -139,11 +139,11 @@ function Home() {
                       <span className="text-xs text-gray-400">
                         {timeAgo(job.postedAt)}
                       </span>
-<Link to={`/view/${job.id}`}>
+                      <Link to={`/view/${job.id}`}>
 
-                      <button className="bg-blue-600 text-white px-4 py-2 text-sm rounded-lg hover:bg-blue-700">
-                        View Job
-                      </button>
+                        <button className="bg-blue-600 text-white px-4 py-2 text-sm rounded-lg hover:bg-blue-700">
+                          View Job
+                        </button>
                       </Link>
 
                     </div>
@@ -166,7 +166,7 @@ function Home() {
             {/* Motivational Quote Card */}
             <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl shadow p-6 text-white">
               <svg className="w-10 h-10 mb-3 opacity-80" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
               </svg>
               <p className="text-lg font-medium italic">"The future depends on what you do today."</p>
               <p className="text-sm mt-3 opacity-80">- Mahatma Gandhi</p>
@@ -176,36 +176,36 @@ function Home() {
             <div className="bg-white rounded-xl shadow p-5">
               <h3 className="font-bold text-lg mb-3">Featured Companies</h3>
               <div className="space-y-3">
-                <a 
-                  href="https://www.google.com" 
-                  target="_blank" 
+                <a
+                  href="https://www.google.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition cursor-pointer no-underline"
                 >
                   <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 font-bold">G</div>
                   <span className="font-medium text-gray-700">Google</span>
                 </a>
-                <a 
-                  href="https://www.microsoft.com" 
-                  target="_blank" 
+                <a
+                  href="https://www.microsoft.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition cursor-pointer no-underline"
                 >
                   <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 font-bold">M</div>
                   <span className="font-medium text-gray-700">Microsoft</span>
                 </a>
-                <a 
-                  href="https://www.amazon.com" 
-                  target="_blank" 
+                <a
+                  href="https://www.amazon.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition cursor-pointer no-underline"
                 >
                   <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center text-green-600 font-bold">A</div>
                   <span className="font-medium text-gray-700">Amazon</span>
                 </a>
-                <a 
-                  href="https://www.tesla.com" 
-                  target="_blank" 
+                <a
+                  href="https://www.tesla.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition cursor-pointer no-underline"
                 >
@@ -220,8 +220,8 @@ function Home() {
               <h3 className="font-bold text-lg mb-3">Success Stories</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <img 
-                    src="https://randomuser.me/api/portraits/women/44.jpg" 
+                  <img
+                    src="https://randomuser.me/api/portraits/women/44.jpg"
                     alt="Sarah"
                     className="w-10 h-10 rounded-full object-cover"
                   />
@@ -231,8 +231,8 @@ function Home() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <img 
-                    src="https://randomuser.me/api/portraits/men/46.jpg" 
+                  <img
+                    src="https://randomuser.me/api/portraits/men/46.jpg"
                     alt="Mike"
                     className="w-10 h-10 rounded-full object-cover"
                   />
@@ -244,24 +244,15 @@ function Home() {
               </div>
             </div>
 
-            {/* Office Hours Card
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl shadow p-5 text-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">⏰</span>
-                <h3 className="font-bold text-lg">Office Hours</h3>
-              </div>
-              <p className="text-sm opacity-90">Mon - Fri: 9:00 AM - 6:00 PM</p>
-              <p className="text-sm opacity-90">Sat: 10:00 AM - 2:00 PM</p>
-              <p className="text-sm opacity-90 mt-2">📞 Support: +1 (800) 123-4567</p>
-            </div> */}
+
 
           </div>
 
         </div>
-        <Footer/>
+        <Footer />
 
       </div>
-      
+
     </>
   )
 

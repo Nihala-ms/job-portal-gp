@@ -99,7 +99,7 @@ input {
   font-size: 1rem;
 }
 
-button {
+.button-primary {
   padding: 15px 40px;
   border: none;
   border-radius: 15px;
@@ -111,7 +111,7 @@ button {
   box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
 }
 
-button:hover {
+.button-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 25px rgba(99, 102, 241, 0.3);
 }

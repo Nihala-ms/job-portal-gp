@@ -75,12 +75,16 @@ const handleLogout = () => {
         {/* --- Navigation Items --- */}
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
-            <span className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
-    About
-  </span>
-  <span className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
-    Contacts
-  </span>
+      <Link to={'/about'}>
+              <span className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
+      About
+    </span>
+      </Link>
+  <Link to={'/contacts'}>
+    <span className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
+      Contacts
+    </span>
+  </Link>
           </nav>
 
           <div className="h-8 w-px bg-slate-200 hidden md:block"></div>

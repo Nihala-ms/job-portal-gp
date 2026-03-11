@@ -3,16 +3,24 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
-import { addToAppliedJobs } from "../Redux/slice/appliedSlice";
+// import { addToAppliedJobs } from "../Redux/slice/appliedSlice";
+import { updateUserProfile } from "../Redux/slice/userSlice";
 import Swal from 'sweetalert2'
+
+
+
 function View() {
+
+
+  const currentUser = useSelector(state => state.userReducer.currentUser)
 
   const dispatch = useDispatch()
 
 
   const { id } = useParams()
   const [job, setJob] = useState({})
-  const { appliedJobs } = useSelector(state => state.appliedReducer)
+  // const { appliedJobs } = useSelector(state => state.appliedReducer)
+
 
   useEffect(() => {
     const allJobs = JSON.parse(localStorage.getItem("allJobs"))
@@ -21,28 +29,63 @@ function View() {
 
 
 
+  // const handleApplyJob = (job) => {
+  //   const existingJob = appliedJobs.find(item => item.id == job.id)
+  //   if (existingJob) {
+  //    Swal.fire({
+  //       position: "top-end",
+
+  //       title: "Job already applied",
+  //       showConfirmButton: false,
+  //       timer: 1500
+  //     });
+  //   }
+  //   else {
+  //     dispatch(addToAppliedJobs(job))
+  //     Swal.fire({
+  //       position: "top-end",
+
+  //       title: "Applied successfully",
+  //       showConfirmButton: false,
+  //       timer: 1500
+  //     });
+  //   }
+  // }
+
   const handleApplyJob = (job) => {
-    const existingJob = appliedJobs.find(item => item.id == job.id)
-    if (existingJob) {
-     Swal.fire({
-        position: "top-end",
 
-        title: "Job already applied",
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-    else {
-      dispatch(addToAppliedJobs(job))
-      Swal.fire({
-        position: "top-end",
+  const existingJob = currentUser?.appliedJobs?.find(item => item.id == job.id)
 
-        title: "Applied successfully",
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
+  if (existingJob) {
+    Swal.fire({
+      position: "top-end",
+      title: "Job already applied",
+      showConfirmButton: false,
+      timer: 1500
+    })
+  } 
+  else {
+
+    const updatedAppliedJobs = [
+      ...(currentUser.appliedJobs || []),
+      job
+    ]
+
+    dispatch(updateUserProfile({
+      id: currentUser.id,
+      updatedData: { appliedJobs: updatedAppliedJobs }
+    }))
+
+    Swal.fire({
+      position: "top-end",
+      title: "Applied successfully",
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
+}
+
+const alreadyApplied = currentUser?.appliedJobs?.some(item => item.id == job.id)
 
   return (
     <> <Header viewApplication />
@@ -115,8 +158,8 @@ function View() {
             {/* Apply Button */}
             <div className="mt-8">
 
-              <button onClick={() => handleApplyJob(job)} className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-                Apply Now
+              <button  disabled={alreadyApplied} onClick={() => handleApplyJob(job)} className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+               {alreadyApplied ? "Already Applied" : "Apply Now"}
               </button>
 
             </div>
