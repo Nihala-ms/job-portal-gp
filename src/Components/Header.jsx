@@ -5,6 +5,7 @@ import { logoutUser } from '../Redux/slice/userSlice';
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { searchJob } from '../Redux/slice/jobSlice';
+import Swal from "sweetalert2";
 
 
 const Header = ({insideHome,viewApplication}) => {
@@ -13,11 +14,31 @@ const Header = ({insideHome,viewApplication}) => {
 
   const dispatch = useDispatch()
 const navigate = useNavigate()
-const handleLogout = () => {
 
-  dispatch(logoutUser())
-   navigate("/auth")
-}
+// handle logout
+const handleLogout = () => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You will be logged out!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, logout"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      dispatch(logoutUser());
+      navigate("/auth");
+
+      Swal.fire({
+        title: "Logged out!",
+        text: "You have been logged out.",
+        icon: "success"
+      });
+    }
+  });
+};
+
   return (
     <header className="w-full bg-white border-b border-slate-200 py-3 px-6 sticky top-0 ">
       <div className=" w-full flex items-center justify-between gap-8">
@@ -54,8 +75,12 @@ const handleLogout = () => {
         {/* --- Navigation Items --- */}
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
-            <button className="hover:text-blue-600 transition">About</button>
-            <button className="hover:text-blue-600 transition">Contacts</button>
+            <span className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
+    About
+  </span>
+  <span className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
+    Contacts
+  </span>
           </nav>
 
           <div className="h-8 w-px bg-slate-200 hidden md:block"></div>
@@ -78,7 +103,7 @@ const handleLogout = () => {
               </div>
               <div className="w-11 h-11 bg-slate-200 rounded-full border-2 border-white shadow-sm overflow-hidden ring-1 ring-slate-100">
                  <img 
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
+                  src="https://cdn-icons-png.freepik.com/512/303/303593.png" 
                   alt="Profile" 
                   className="w-full h-full object-cover"
                  />

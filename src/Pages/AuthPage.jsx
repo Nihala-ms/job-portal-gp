@@ -41,8 +41,10 @@ function AuthPage() {
       profile: {
         gender: "",
         location: "",
+        about:"",
         education: [],
         workExperience: []
+        
       }
     }))
      if (result.meta.requestStatus === "fulfilled") {
@@ -56,80 +58,82 @@ function AuthPage() {
   }
 
   return (
-    <div className={`container ${isRegister ? "active" : ""}`}>
-
-      <div className="form-container">
-
-        {!isRegister ? (
-          <div className="form login">
-            <h2>Login</h2>
-
-            <input
-              type="email"
-              placeholder="Email"
-              value={loginData.email}
-              onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-            />
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={loginData.password}
-              onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-            />
-
-            <button onClick={handleLogin}>Login</button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-          </div>
-
-        ) : (
-
-          <div className="form register">
-            <h2>Register</h2>
-
-            <input
-              type="text"
-              placeholder="Name"
-              value={registerData.name}
-              onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-            />
-
-            <input
-              type="email"
-              placeholder="Email"
-              value={registerData.email}
-              onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-            />
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={registerData.password}
-              onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-            />
-
-            <button onClick={handleRegister}>Register</button>
-
-            {error && <p style={{ color: "red" }}>{error}</p>}
-          </div>
-        )}
-
+    <div className="authPage">
+      <div className={`container ${isRegister ? "active" : ""}`}>
+  
+        <div className="form-container">
+  
+          {!isRegister ? (
+            <div className="form login">
+              <h2>Login</h2>
+  
+              <input
+                type="email"
+                placeholder="Email"
+                value={loginData.email}
+                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+              />
+  
+              <input
+                type="password"
+                placeholder="Password"
+                value={loginData.password}
+                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+              />
+  
+              <button onClick={handleLogin}>Login</button>
+              {error && <p style={{ color: "red" }}>{error}</p>}
+            </div>
+  
+          ) : (
+  
+            <div className="form register">
+              <h2>Register</h2>
+  
+              <input
+                type="text"
+                placeholder="Name"
+                value={registerData.name}
+                onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
+              />
+  
+              <input
+                type="email"
+                placeholder="Email"
+                value={registerData.email}
+                onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
+              />
+  
+              <input
+                type="password"
+                placeholder="Password"
+                value={registerData.password}
+                onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
+              />
+  
+              <button onClick={handleRegister}>Register</button>
+  
+              {error && <p style={{ color: "red" }}>{error}</p>}
+            </div>
+          )}
+  
+        </div>
+  
+        <div className="panel">
+          {!isRegister ? (
+            <>
+              <h2>New Here?</h2>
+              <button onClick={() => setIsRegister(true)}>Register</button>
+            </>
+          ) : (
+            <>
+              <h2>Already have account?</h2>
+              <button onClick={() => setIsRegister(false)}>Login</button>
+            </>
+          )}
+        </div>
+  
       </div>
-
-      <div className="panel">
-        {!isRegister ? (
-          <>
-            <h2>New Here?</h2>
-            <button onClick={() => setIsRegister(true)}>Register</button>
-          </>
-        ) : (
-          <>
-            <h2>Already have account?</h2>
-            <button onClick={() => setIsRegister(false)}>Login</button>
-          </>
-        )}
-      </div>
-
     </div>
   )
 }

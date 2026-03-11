@@ -42,7 +42,7 @@ return ( <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
 
         <img
           className="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover"
-          src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+          src="https://cdn-icons-png.flaticon.com/512/9187/9187532.png"
           alt="Profile"
         />
 
@@ -206,7 +206,7 @@ return ( <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
             </p>
 
             <p>
-              <span className="font-medium">Location:</span> Kochi
+              <span className="font-medium">Location:</span>  {currentUser?.profile?.location || "Add location"}
             </p>
 
           </div>
