@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios"
 
+const server_URL = "https://job-server-uuur.onrender.com"
 export const fetchJobs = createAsyncThunk('jobs/fetchJobs',async()=>{
-    const result = await axios.get('http://localhost:3000/jobs')
+    const result = await axios.get(`${server_URL}/jobs`)
     // console.log(result.data);
     localStorage.setItem("allJobs",JSON.stringify(result.data))
     return result.data

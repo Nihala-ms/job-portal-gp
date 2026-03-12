@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-const BASE_URL = "http://localhost:3000/users"
+const server_URL = "https://job-server-uuur.onrender.com"
+const BASE_URL = `${server_URL}/users`
+
 
 
 // REGISTER USER
